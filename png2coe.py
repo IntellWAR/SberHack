@@ -1,12 +1,17 @@
 from PIL import Image
+new_size = 50
 
-image = Image.open('../figures/sber_logo.png').convert('RGB')
+image = Image.open('./figures/plane.png').convert('RGB')
+image_size = image.size
+image_ratio = image.size[0]/image.size[1]
+print(f"Original size, new size : {image.size}, ({int(new_size*image_ratio)}, {new_size})")
+image_resized = image.resize((int(new_size*image_ratio), new_size))
 
-with open('../figures/coe/sber_logo.coe','w') as f:
+with open('./figures/coe/plane.coe','w') as f:
     f.write('memory_initialization_radix=16;\n')
     f.write('memory_initialization_vector=\n')
 
-    for pixel in list(image.getdata()):
+    for pixel in list(image_resized.getdata()):
         r_4 = pixel[0] >> 4
         g_4 = pixel[1] >> 4
         b_4 = pixel[2] >> 4
